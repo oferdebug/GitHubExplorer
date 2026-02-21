@@ -1,12 +1,14 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "single"
-		}
-	},
 	"formatter": {
+		"enabled": true,
 		"indentStyle": "tab",
 		"indentWidth": 4
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "single"
+		}
 	}
 }

@@ -1,8 +1,18 @@
-import "./App.css";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
+import { Navbar } from './components/Navbar';
+import { Home } from './pages/Home';
 
 function App() {
 	return (
-		<div className={"bg-red-500 text-7xl text-white p-2"}>Hello World</div>
+		<BrowserRouter>
+			<Navbar />
+			<main className={'max-w-7xl mx-auto px-4 py-6'}>
+				<Routes>
+					<Route path='/' element={<Home />} />
+				</Routes>
+			</main>
+		</BrowserRouter>
 	);
 }
 
