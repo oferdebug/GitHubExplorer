@@ -170,7 +170,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@your-username](https://github.com/your-username)
+- GitHub: [@oferdebug](https://github.com/oferdebug)
 - LinkedIn: [your-linkedin](https://linkedin.com/in/your-profile)
 
 ---
@@ -179,3 +179,4 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
   <p>⭐ If you found this project helpful, please give it a star!</p>
   <p>Made with ❤️ and React.js</p>
 </div>
+
