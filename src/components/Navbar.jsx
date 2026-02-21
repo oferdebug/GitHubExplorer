@@ -1,5 +1,4 @@
-import { Heart } from 'lucide-react';
-import { Github, Search } from 'lucide-react';
+import { Github, Heart, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Navbar() {
@@ -33,7 +32,9 @@ export function Navbar() {
 				</Link>
 				<Link
 					to='/login'
-					className={'bg-gray-800 py-4 rounded hover:bg-gray-600'}
+					className={
+						'bg-gray-800 px-4 py-2 rounded hover:bg-gray-600'
+					}
 				>
 					Login
 				</Link>

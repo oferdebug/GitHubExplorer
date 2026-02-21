@@ -7,7 +7,9 @@ export function SearchBar() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+		const trimmedQuery = query.trim();
+		if (!trimmedQuery) return;
+		navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`);
 	};
 
 	return (

@@ -20,7 +20,7 @@ export const getUserRepos = (username) => {
 	return api.get(`/github/users/${username}/repos`);
 };
 
-//Get User Details From Github
+//Get Repo Details
 export const getRepo = (owner, name) => {
 	return api.get(`/github/repos/${owner}/${name}`);
 };
