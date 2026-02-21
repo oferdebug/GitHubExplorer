@@ -11,22 +11,22 @@ export const searchGithub = (q, type = 'repositories') =>
 
 //Get User Profile
 export const getUser = (username) => {
-	api.get(`/github/users/${username}`);
+	return api.get(`/github/users/${username}`);
 };
 
 //Get User Repos
 export const getUserRepos = (username) => {
-	api.get(`/github/users/${username}/repos`);
+	return api.get(`/github/users/${username}/repos`);
 };
 
 //Get User Details From Github
 export const getRepo = (owner, name) => {
-	api.get(`/github/repos/${owner}/${name}`);
+	return api.get(`/github/repos/${owner}/${name}`);
 };
 
 //Get Repo Language
 export const getRepoLanguage = (owner, name) => {
-	api.get(`/github/repos/${owner}/${name}/languages`);
+	return api.get(`/github/repos/${owner}/${name}/languages`);
 };
 
 export default api;
