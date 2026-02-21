@@ -1,4 +1,5 @@
 import { GitFork, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Repocard({ repo }) {
 	return (

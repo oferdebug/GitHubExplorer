@@ -1,4 +1,5 @@
 {
+	"biome.requireConfiguration": true,
 	"editor.autoClosingQuotes": "always",
 	"javascript.preferences.quoteStyle": "single",
 	"typescript.preferences.quoteStyle": "single"

@@ -10,6 +10,10 @@ function App() {
 			<main className={'max-w-7xl mx-auto px-4 py-6'}>
 				<Routes>
 					<Route path='/' element={<Home />} />
+					<Route
+						path='/search'
+						element={<div>Search results coming soon...</div>}
+					/>
 				</Routes>
 			</main>
 		</BrowserRouter>

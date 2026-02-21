@@ -30,14 +30,20 @@ export const fetchUserRepos = async (username, page = 1, perPage = 30) => {
 	);
 };
 
-export const searchRepositores = async (query, page = 1, perPage = 30) => {
+export const searchRepositories = async (
+	query,
+	page = 1,
+	perPage = 30,
+	sort = '',
+	order = '',
+) => {
 	const params = new URLSearchParams({
 		q: query,
 		page: page.toString(),
-		perPage: perPage.toString(),
-		sort,
-		order,
+		per_page: perPage.toString(),
 	});
+	if (sort) params.append('sort', sort);
+	if (order) params.append('order', order);
 	const response = await fetch(
 		`${GITHUB_API_BASE}/search/repositories?${params.toString()}`,
 	);
