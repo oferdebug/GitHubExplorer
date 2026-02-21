@@ -1,0 +1,7 @@
+{
+	"biome.requireConfiguration": true,
+	"editor.autoClosingQuotes": "always",
+	"docker.languageserver.diagnostics.instructionJSONInSingleQuotes": "ignore",
+	"javascript.preferences.quoteStyle": "single",
+	"typescript.preferences.quoteStyle": "single"
+}
