@@ -30,4 +30,8 @@ export const getRepoLanguage = (owner, name) => {
 	return api.get(`/github/repos/${owner}/${name}/languages`);
 };
 
+export const getRepoContributors = (owner, name) => {
+	return api.get(`/github/repos/${owner}/${name}/contributors`);
+};
+
 export default api;
