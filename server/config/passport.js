@@ -29,13 +29,15 @@ passport.use(
 					user = await User.create({
 						githubId: profile.id,
 						username: profile.username,
-						displayName: profile.displayName,
+						displayName:
+							profile.displayName || profile.username || '',
 						avatarUrl: profile.photos?.[0]?.value || '',
 						accessToken,
 					});
 				} else {
 					user.accessToken = accessToken;
-					user.avatarUrl = profile.photos?.[0]?.value || user.avatarUrl;
+					user.avatarUrl =
+						profile.photos?.[0]?.value || user.avatarUrl;
 					await user.save();
 				}
 				done(null, user);

@@ -14,6 +14,7 @@ const SearchForm = ({
 					value={value}
 					onChange={onChange}
 					placeholder={placeholder}
+					aria-label={placeholder || 'Search'}
 					className={
 						'flex-1 px-8 py-6 bg-gray-700 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent'
 					}

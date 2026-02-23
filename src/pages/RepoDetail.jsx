@@ -6,6 +6,7 @@ import { RepoCommits } from '../components/RepoCommits';
 import { RepoContributors } from '../components/RepoContributors';
 import { RepoIssues } from '../components/RepoIssues';
 import { RepoLanguages } from '../components/RepoLanguages';
+import { RepoReadme } from '../components/RepoReadme';
 import {
 	getRepo,
 	getRepoBranches,
@@ -29,7 +30,7 @@ export default function RepoDetail() {
 	useEffect(() => {
 		setLoading(true);
 		setError(null);
-		Promise.all([
+		Promise.allSettled([
 			getRepo(owner, name),
 			getRepoLanguage(owner, name),
 			getRepoContributors(owner, name),
@@ -37,38 +38,103 @@ export default function RepoDetail() {
 			getRepoBranches(owner, name),
 			getRepoIssues(owner, name),
 		])
-			.then(
-				([
+			.then((results) => {
+				const [
 					repoRes,
 					langRes,
-					contributorsRes,
+					contribRes,
 					commitsRes,
 					branchesRes,
 					issuesRes,
-				]) => {
-					setRepo(repoRes.data);
-					setLanguages(langRes.data);
-					setContributors(contributorsRes.data);
-					setCommits(commitsRes.data);
-					setBranches(branchesRes.data);
-					setIssues(issuesRes.data);
-				},
-			)
-			.catch((err) => setError(err.message))
+				] = results;
+				if (repoRes.status === 'fulfilled') setRepo(repoRes.value.data);
+				else setError(repoRes.reason?.message || 'Failed to load repo');
+				if (langRes.status === 'fulfilled')
+					setLanguages(langRes.value.data);
+				if (contribRes.status === 'fulfilled')
+					setContributors(contribRes.value.data);
+				if (commitsRes.status === 'fulfilled')
+					setCommits(commitsRes.value.data);
+				if (branchesRes.status === 'fulfilled')
+					setBranches(branchesRes.value.data);
+				if (issuesRes.status === 'fulfilled')
+					setIssues(issuesRes.value.data);
+			})
 			.finally(() => setLoading(false));
 	}, [owner, name]);
 
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error}</p>;
+	if (loading) {
+		return (
+			<div className={'flex items-center justify-center py-20'}>
+				<div
+					className={
+						'w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin'
+					}
+				/>
+			</div>
+		);
+	}
+	if (error) {
+		return (
+			<div className={'max-w-6xl mx-auto px-4 py-8'}>
+				<div
+					className={
+						'bg-red-500/10 border border-red-500/30 rounded-xl p-6 text-red-400'
+					}
+				>
+					{error}
+				</div>
+			</div>
+		);
+	}
 	if (!repo) return null;
 	return (
-		<div>
+		<div className={'max-w-6xl mx-auto px-4 py-8'}>
 			<Repocard repo={repo} />
-			<RepoLanguages languages={languages} />
-			<RepoContributors contributors={contributors} />
-			<RepoCommits commits={commits} />
-			<RepoBranches branches={branches} />
-			<RepoIssues issues={issues} />
+			<div
+				className={
+					'bg-gray-800/40 border border-gray-700/50 rounded-xl p-6 mt-8'
+				}
+			>
+				<RepoReadme owner={owner} name={name} />
+			</div>
+			<div className={'grid grid-cols-1 md:grid-cols-2 gap-6 mt-8'}>
+				<div
+					className={
+						'bg-gray-800/40 border border-gray-700/50 rounded-xl p-6'
+					}
+				>
+					<RepoLanguages languages={languages} />
+				</div>
+				<div
+					className={
+						'bg-gray-800/40 border border-gray-700/50 rounded-xl p-6'
+					}
+				>
+					<RepoContributors contributors={contributors} />
+				</div>
+				<div
+					className={
+						'bg-gray-800/40 border border-gray-700/50 rounded-xl p-6'
+					}
+				>
+					<RepoCommits commits={commits} />
+				</div>
+				<div
+					className={
+						'bg-gray-800/40 border border-gray-700/50 rounded-xl p-6'
+					}
+				>
+					<RepoBranches branches={branches} />
+				</div>
+			</div>
+			<div
+				className={
+					'bg-gray-800/40 border border-gray-700/50 rounded-xl p-6 mt-6'
+				}
+			>
+				<RepoIssues issues={issues} />
+			</div>
 		</div>
 	);
 }

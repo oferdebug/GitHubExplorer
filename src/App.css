@@ -1,35 +1,52 @@
-.logo {
-	height: 6em;
-	padding: 1.5em;
-	will-change: filter;
-	transition: filter 300ms;
-}
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-	filter: drop-shadow(0 0 2em #61dafbaa);
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
 }
 
-@keyframes logo-spin {
+@keyframes pulse-glow {
+	0%,
+	100% {
+		opacity: 0.4;
+	}
+	50% {
+		opacity: 0.8;
+	}
+}
+
+@keyframes fade-in-up {
 	from {
-		transform: rotate(0deg);
+		opacity: 0;
+		transform: translateY(20px);
 	}
 	to {
-		transform: rotate(360deg);
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	a:nth-of-type(2) .logo {
-		animation: logo-spin infinite 20s linear;
-	}
+.animate-float {
+	animation: float 6s ease-in-out infinite;
 }
 
-.card {
-	padding: 2em;
+.animate-pulse-glow {
+	animation: pulse-glow 4s ease-in-out infinite;
 }
 
-.read-the-docs {
-	color: #888;
+.animate-fade-in-up {
+	animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animation-delay-200 {
+	animation-delay: 0.2s;
+}
+.animation-delay-400 {
+	animation-delay: 0.4s;
+}
+.animation-delay-600 {
+	animation-delay: 0.6s;
 }

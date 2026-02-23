@@ -29,7 +29,9 @@ router.get('/me', (req, res) => {
 router.post('/logout', (req, res) => {
 	req.logout((err) => {
 		if (err) return res.status(500).json({ error: err.message });
-		req.session.destroy(() => {
+		req.session.destroy((destroyErr) => {
+			if (destroyErr)
+				return res.status(500).json({ error: destroyErr.message });
 			res.clearCookie('connect.sid');
 			res.json({ message: 'Logged out' });
 		});

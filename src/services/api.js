@@ -6,8 +6,18 @@ const api = axios.create({
 });
 
 //Search Users Or Repos
-export const searchGithub = (q, type = 'repositories') => {
-	return api.get('/github/search', { params: { q, type } });
+export const searchGithub = (
+	q,
+	type = 'repositories',
+	sort,
+	order,
+	per_page = 20,
+	page = 1,
+) => {
+	const params = { q, type, per_page, page };
+	if (sort) params.sort = sort;
+	if (order) params.order = order;
+	return api.get('/github/search', { params });
 };
 
 //Get User Profile
@@ -48,6 +58,30 @@ export const getRepoIssues = (owner, name) => {
 
 export const getRepoPulls = (owner, name) => {
 	return api.get(`/github/repos/${owner}/${name}/pulls`);
+};
+
+//Get Repo Readme
+export const getRepoReadme = (owner, name) => {
+	return api.get(`/github/repos/${owner}/${name}/readme`, {
+		transformResponse: [(data) => data],
+	});
+};
+
+// Favorites
+export const getFavorites = () => {
+	return api.get('/favorites');
+};
+
+export const checkFavorite = (type, githubId) => {
+	return api.get('/favorites/check', { params: { type, githubId } });
+};
+
+export const addFavorite = (data) => {
+	return api.post('/favorites', data);
+};
+
+export const removeFavorite = (id) => {
+	return api.delete(`/favorites/${id}`);
 };
 
 export default api;

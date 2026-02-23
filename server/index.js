@@ -25,6 +25,12 @@ app.use(
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: false,
+		cookie: {
+			httpOnly: true,
+			sameSite: 'lax',
+			secure: process.env.NODE_ENV === 'production',
+			maxAge: 24 * 60 * 60 * 1000,
+		},
 	}),
 );
 app.use(passport.initialize());
@@ -39,6 +45,14 @@ app.use('/api/favorites', require('./routes/favorites'));
 app.get('/', (_req, res) => {
 	res.send('Github Explorer API Ready!');
 });
+// Global error handler — catches unhandled errors and returns JSON
+app.use((err, _req, res, _next) => {
+	console.error('Unhandled error:', err);
+	res.status(err.status || 500).json({
+		error: err.message || 'Internal server error',
+	});
+});
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
 module.exports = app;

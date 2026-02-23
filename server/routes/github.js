@@ -161,4 +161,41 @@ router.get('/repos/:owner/:name/issues', async (req, res) => {
 		res.status(err.status || 500).json({ error: err.message });
 	}
 });
+
+router.get('/repos/:owner/:name/pulls', async (req, res) => {
+	try {
+		const result = await octokit.request(
+			'GET /repos/{owner}/{repo}/pulls',
+			{
+				owner: req.params.owner,
+				repo: req.params.name,
+				per_page: req.query.per_page || 30,
+				page: req.query.page || 1,
+			},
+		);
+		res.json(result.data);
+	} catch (err) {
+		res.status(err.status || 500).json({ error: err.message });
+	}
+});
+
+router.get('/repos/:owner/:name/readme', async (req, res) => {
+	try {
+		const result = await octokit.request(
+			'GET /repos/{owner}/{repo}/readme',
+			{
+				owner: req.params.owner,
+				repo: req.params.name,
+				headers: { Accept: 'application/vnd.github.raw+json' },
+			},
+		);
+		res.type('text/plain').send(result.data);
+	} catch (err) {
+		if (err.status === 404) {
+			return res.status(404).json({ error: 'No README found' });
+		}
+		res.status(err.status || 500).json({ error: err.message });
+	}
+});
+
 module.exports = router;
