@@ -27,7 +27,7 @@ export const SearchResults = () => {
 
 	return (
 		<div>
-			<h1>Searchresults</h1>
+			<h1>Search Results</h1>
 			<div className={'flex gap-4 mb-4'}>
 				<button
 					type='button'
