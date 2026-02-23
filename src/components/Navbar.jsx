@@ -1,7 +1,10 @@
-import { Github, Heart, Search } from 'lucide-react';
+import { Github, Heart, LogOut, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export function Navbar() {
+	const { user, loading, logout } = useAuth();
+
 	return (
 		<nav
 			className={
@@ -30,14 +33,42 @@ export function Navbar() {
 					<Heart size={20} />
 					<span>Favorites</span>
 				</Link>
-				<Link
-					to='/login'
-					className={
-						'bg-gray-800 px-4 py-2 rounded hover:bg-gray-600'
-					}
-				>
-					Login
-				</Link>
+				{loading ? null : user ? (
+					<div className={'flex items-center gap-4'}>
+						<Link
+							to={`/users/${user.username}`}
+							className={
+								'flex items-center gap-2 hover:text-gray-300'
+							}
+						>
+							<img
+								src={user.avatarUrl}
+								alt={user.username}
+								className={'w-8 h-8 rounded-full'}
+							/>
+							<span>{user.username}</span>
+						</Link>
+						<button
+							type='button'
+							onClick={logout}
+							className={
+								'flex items-center gap-1 bg-gray-800 px-3 py-2 rounded hover:bg-gray-600 text-sm'
+							}
+						>
+							<LogOut size={16} />
+							Logout
+						</button>
+					</div>
+				) : (
+					<Link
+						to='/login'
+						className={
+							'bg-gray-800 px-4 py-2 rounded hover:bg-gray-600'
+						}
+					>
+						Login
+					</Link>
+				)}
 			</div>
 		</nav>
 	);
