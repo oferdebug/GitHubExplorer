@@ -117,5 +117,48 @@ router.get('/repos/:owner/:name/languages', async (req, res) => {
 		res.status(error.status || 500).json({ error: error.message });
 	}
 });
+router.get('/repos/:owner/:name/commits', async (req, res) => {
+	try {
+		const result = await octokit.request(
+			'GET /repos/{owner}/{repo}/commits',
+			{
+				owner: req.params.owner,
+				repo: req.params.name,
+			},
+		);
+		res.json(result.data);
+	} catch (err) {
+		res.status(err.status || 500).json({ error: err.message });
+	}
+});
 
+router.get('/repos/:owner/:name/branches', async (req, res) => {
+	try {
+		const result = await octokit.request(
+			'GET /repos/{owner}/{repo}/branches',
+			{
+				owner: req.params.owner,
+				repo: req.params.name,
+			},
+		);
+		res.json(result.data);
+	} catch (err) {
+		res.status(err.status || 500).json({ error: err.message });
+	}
+});
+
+router.get('/repos/:owner/:name/issues', async (req, res) => {
+	try {
+		const result = await octokit.request(
+			'GET /repos/{owner}/{repo}/issues',
+			{
+				owner: req.params.owner,
+				repo: req.params.name,
+			},
+		);
+		res.json(result.data);
+	} catch (err) {
+		res.status(err.status || 500).json({ error: err.message });
+	}
+});
 module.exports = router;

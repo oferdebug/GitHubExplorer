@@ -34,4 +34,20 @@ export const getRepoContributors = (owner, name) => {
 	return api.get(`/github/repos/${owner}/${name}/contributors`);
 };
 
+export const getRepoCommits = (owner, name) => {
+	return api.get(`/github/repos/${owner}/${name}/commits`);
+};
+
+export const getRepoBranches = (owner, name) => {
+	return api.get(`/github/repos/${owner}/${name}/branches`);
+};
+
+export const getRepoIssues = (owner, name) => {
+	return api.get(`/github/repos/${owner}/${name}/issues`);
+};
+
+export const getRepoPulls = (owner, name) => {
+	return api.get(`/github/repos/${owner}/${name}/pulls`);
+};
+
 export default api;
