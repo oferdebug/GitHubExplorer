@@ -22,10 +22,8 @@ export const SearchResults = () => {
 
 	useEffect(() => {
 		if (!q) return;
-		if (q !== prevQuery.current) {
-			setPage(1);
-			prevQuery.current = q;
-		}
+		setPage(1);
+		prevQuery.current = q;
 		const fetchResults = (pageNum, append = false) => {
 			if (!q) return;
 			if (append) {

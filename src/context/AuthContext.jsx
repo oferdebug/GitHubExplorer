@@ -37,13 +37,13 @@ export default function AuthProvider({ children }) {
 	};
 
 	const logout = async () => {
-		try {
-			await fetch(`${API_BASE}/auth/logout`, {
-				method: 'POST',
-				credentials: 'include',
-			});
-		} catch (err) {
-			console.error(err);
+		const res = await fetch(`${API_BASE}/auth/logout`, {
+			method: 'POST',
+			credentials: 'include',
+		});
+		if (!res.ok) {
+			const body = await res.json().catch(() => ({}));
+			throw new Error(body.error || 'Logout failed');
 		}
 		setUser(null);
 	};

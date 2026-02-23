@@ -29,7 +29,11 @@ export function RepoReadme({ owner, name }) {
 	if (loading) {
 		return (
 			<div className={'flex items-center justify-center py-10'}>
-				<div className={'w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin'} />
+				<div
+					className={
+						'w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin'
+					}
+				/>
 			</div>
 		);
 	}
@@ -46,15 +50,26 @@ export function RepoReadme({ owner, name }) {
 				<BookOpen size={18} className={'text-purple-400'} />
 				<h3 className={'text-lg font-semibold text-white'}>README</h3>
 			</div>
-			<div className={'prose prose-invert prose-sm max-w-none prose-headings:text-white prose-a:text-blue-400 prose-strong:text-white prose-code:text-purple-300 prose-pre:bg-transparent prose-pre:p-0'}>
+			<div
+				className={
+					'prose prose-invert prose-sm max-w-none prose-headings:text-white prose-a:text-blue-400 prose-strong:text-white prose-code:text-purple-300 prose-pre:bg-transparent prose-pre:p-0'
+				}
+			>
 				<Markdown
 					remarkPlugins={[remarkGfm]}
 					components={{
-						code({ className, children, ...props }) {
-							const match = /language-(\w+)/.exec(className || '');
-							const inline = !match && !className;
-							return inline ? (
-								<code className={'bg-gray-700/50 px-1.5 py-0.5 rounded text-sm'} {...props}>
+						code({ className, children, node, ...rest }) {
+							const match = /language-(\w+)/.exec(
+								className || '',
+							);
+							const isBlock = String(children).includes('\n');
+							return !isBlock && !match ? (
+								<code
+									className={
+										'bg-gray-700/50 px-1.5 py-0.5 rounded text-sm'
+									}
+									{...rest}
+								>
 									{children}
 								</code>
 							) : (
@@ -72,36 +87,51 @@ export function RepoReadme({ owner, name }) {
 								</SyntaxHighlighter>
 							);
 						},
-						img({ src, alt, ...props }) {
+						img({ src, alt, node, ...rest }) {
 							return (
 								<img
 									src={src}
 									alt={alt || ''}
 									className={'max-w-full rounded-lg'}
+									{...rest}
 									loading='lazy'
-									{...props}
 								/>
 							);
 						},
-						table({ children, ...props }) {
+						table({ children, node, ...rest }) {
 							return (
 								<div className={'overflow-x-auto'}>
-									<table className={'border-collapse border border-gray-700'} {...props}>
+									<table
+										className={
+											'border-collapse border border-gray-700'
+										}
+										{...rest}
+									>
 										{children}
 									</table>
 								</div>
 							);
 						},
-						th({ children, ...props }) {
+						th({ children, node, ...rest }) {
 							return (
-								<th className={'border border-gray-700 px-3 py-2 bg-gray-800/50 text-left'} {...props}>
+								<th
+									className={
+										'border border-gray-700 px-3 py-2 bg-gray-800/50 text-left'
+									}
+									{...rest}
+								>
 									{children}
 								</th>
 							);
 						},
-						td({ children, ...props }) {
+						td({ children, node, ...rest }) {
 							return (
-								<td className={'border border-gray-700 px-3 py-2'} {...props}>
+								<td
+									className={
+										'border border-gray-700 px-3 py-2'
+									}
+									{...rest}
+								>
 									{children}
 								</td>
 							);

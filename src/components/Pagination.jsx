@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 const Pagination = ({ currentPage, totalPages, onPageChange, loading }) => {
 	if (totalPages <= 1) return null;
 	const btnClass =
@@ -6,6 +5,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, loading }) => {
 	return (
 		<div className={'flex justify-center items-center gap-4'}>
 			<button
+				type='button'
 				onClick={() => onPageChange(currentPage - 1)}
 				disabled={currentPage === 1 || loading}
 				className={btnClass}
@@ -16,6 +16,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, loading }) => {
 				Page {currentPage} of {totalPages}
 			</span>
 			<button
+				type='button'
 				onClick={() => onPageChange(currentPage + 1)}
 				disabled={currentPage === totalPages || loading}
 				className={btnClass}

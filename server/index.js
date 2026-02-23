@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -13,7 +13,12 @@ const port = process.env.PORT || 3000;
 connectDB();
 
 //Middleware
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(
+	cors({
+		origin: process.env.CLIENT_URL || 'http://localhost:5173',
+		credentials: true,
+	}),
+);
 app.use(express.json());
 app.use(morgan('dev'));
 if (!process.env.SESSION_SECRET) {
@@ -49,7 +54,7 @@ app.get('/', (_req, res) => {
 app.use((err, _req, res, _next) => {
 	console.error('Unhandled error:', err);
 	res.status(err.status || 500).json({
-		error: err.message || 'Internal server error',
+		error: 'Internal server error',
 	});
 });
 

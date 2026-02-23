@@ -1,9 +1,22 @@
 const router = require('express').Router();
-//const {getUsers,addUser,updateUser,deleteUser}=require('../controllers/userController');
+const rateLimit = require('express-rate-limit');
 const { Octokit } = require('octokit');
+
+if (!process.env.GITHUB_TOKEN) {
+	console.error(
+		'WARNING: GITHUB_TOKEN is not set. API rate limits will be very low.',
+	);
+}
 const octokit = new Octokit({
 	auth: process.env.GITHUB_TOKEN,
 });
+
+const githubLimiter = rateLimit({
+	windowMs: 60 * 1000,
+	max: 30,
+	message: { error: 'Too many requests, please try again later.' },
+});
+router.use(githubLimiter);
 
 //Search Users Or Repos
 // GET /api/github/search?q=react&type=users

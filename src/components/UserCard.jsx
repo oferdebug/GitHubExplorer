@@ -48,7 +48,7 @@ export function UserCard({ user }) {
 							}
 						/>
 					</div>
-					{user.public_repos !== undefined && (
+					{Number.isFinite(user.public_repos) && (
 						<span className={'text-xs text-gray-500'}>
 							{user.public_repos} repositories
 						</span>

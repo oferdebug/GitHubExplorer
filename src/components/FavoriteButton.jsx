@@ -17,7 +17,9 @@ export function FavoriteButton({ type, githubId, itemData }) {
 				setFavorited(res.data.isFavorited);
 				if (res.data.favoriteId) setFavId(res.data.favoriteId);
 			})
-			.catch(() => {});
+			.catch((err) =>
+				console.error('Failed to check favorite status:', err),
+			);
 	}, [user, type, githubId]);
 
 	const handleToggle = async (e) => {
@@ -28,9 +30,11 @@ export function FavoriteButton({ type, githubId, itemData }) {
 		setLoading(true);
 		try {
 			if (favorited) {
-				if (favId) {
-					await removeFavorite(favId);
+				if (!favId) {
+					toast.error('Cannot remove: missing favorite ID');
+					return;
 				}
+				await removeFavorite(favId);
 				setFavorited(false);
 				setFavId(null);
 				toast.success('Removed from favorites');

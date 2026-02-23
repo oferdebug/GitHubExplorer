@@ -2,6 +2,8 @@ const router = require('express').Router();
 const Favorite = require('../models/Favorite');
 const { isAuthenticated } = require('../middleware/authMiddleware');
 
+const ALLOWED_TYPES = ['repo', 'user'];
+
 // Get all favorites for the logged-in user
 router.get('/', isAuthenticated, async (req, res) => {
 	try {
@@ -10,7 +12,8 @@ router.get('/', isAuthenticated, async (req, res) => {
 		});
 		res.json(favorites);
 	} catch (err) {
-		res.status(500).json({ error: err.message });
+		console.error('GET /favorites error:', err);
+		res.status(500).json({ error: 'Internal server error' });
 	}
 });
 
@@ -18,6 +21,13 @@ router.get('/', isAuthenticated, async (req, res) => {
 router.get('/check', isAuthenticated, async (req, res) => {
 	try {
 		const { type, githubId } = req.query;
+		if (!type || !githubId) {
+			return res
+				.status(400)
+				.json({
+					error: 'Missing required query params: type, githubId',
+				});
+		}
 		const favorite = await Favorite.findOne({
 			user: req.user._id,
 			type,
@@ -28,7 +38,8 @@ router.get('/check', isAuthenticated, async (req, res) => {
 			favoriteId: favorite?._id || null,
 		});
 	} catch (err) {
-		res.status(500).json({ error: err.message });
+		console.error('GET /favorites/check error:', err);
+		res.status(500).json({ error: 'Internal server error' });
 	}
 });
 
@@ -46,10 +57,24 @@ router.post('/', isAuthenticated, async (req, res) => {
 			stars,
 			language,
 		} = req.body;
+		if (!type || !githubId || !name) {
+			return res
+				.status(400)
+				.json({
+					error: 'Missing required fields: type, githubId, name',
+				});
+		}
+		if (!ALLOWED_TYPES.includes(type)) {
+			return res
+				.status(400)
+				.json({
+					error: `Invalid type. Must be one of: ${ALLOWED_TYPES.join(', ')}`,
+				});
+		}
 		const favorite = await Favorite.create({
 			user: req.user._id,
 			type,
-			githubId,
+			githubId: String(githubId),
 			name,
 			fullName,
 			description,
@@ -64,7 +89,10 @@ router.post('/', isAuthenticated, async (req, res) => {
 		if (err.code === 11000) {
 			return res.status(409).json({ error: 'Already in favorites' });
 		}
-		res.status(500).json({ error: err.message });
+		if (err.name === 'ValidationError') {
+			return res.status(422).json({ error: 'Validation failed' });
+		}
+		res.status(500).json({ error: 'Internal server error' });
 	}
 });
 
@@ -80,7 +108,11 @@ router.delete('/:id', isAuthenticated, async (req, res) => {
 		}
 		res.json({ message: 'Removed from favorites' });
 	} catch (err) {
-		res.status(500).json({ error: err.message });
+		console.error('DELETE /favorites error:', err);
+		if (err.name === 'CastError') {
+			return res.status(400).json({ error: 'Invalid favorite id' });
+		}
+		res.status(500).json({ error: 'Internal server error' });
 	}
 });
 

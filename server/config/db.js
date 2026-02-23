@@ -1,17 +1,44 @@
 const mongoose = require('mongoose');
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 3000;
+
 const connectDB = async () => {
-	try {
-		const conn = await mongoose.connect(process.env.MONGO_URI, {
-			serverSelectionTimeoutMS: 5000,
-		});
-		console.log(`MongoDB Connected: ${conn.connection.host}`);
-	} catch (error) {
-		console.error(`MongoDB connection failed: ${error.message}`);
-		console.error(
-			'Server will continue running but auth features will not work.',
-		);
-		console.error('Make sure your IP is whitelisted in MongoDB Atlas.');
+	for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+		try {
+			const conn = await mongoose.connect(process.env.MONGO_URI, {
+				serverSelectionTimeoutMS: 5000,
+			});
+			console.log(`MongoDB Connected: ${conn.connection.host}`);
+			mongoose.connection.on('error', (err) =>
+				console.error('MongoDB connection error:', err.message),
+			);
+			mongoose.connection.on('disconnected', () =>
+				console.warn('MongoDB disconnected. Attempting reconnect...'),
+			);
+			return;
+		} catch (error) {
+			console.error(
+				`MongoDB connection attempt ${attempt}/${MAX_RETRIES} failed: ${error.message}`,
+			);
+			if (process.env.NODE_ENV === 'production') {
+				console.error(
+					'FATAL: Cannot connect to MongoDB in production.',
+				);
+				process.exit(1);
+			}
+			if (attempt < MAX_RETRIES) {
+				console.log(`Retrying in ${RETRY_DELAY_MS / 1000}s...`);
+				await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+			} else {
+				console.error(
+					'All connection attempts failed. Auth features will not work.',
+				);
+				console.error(
+					'Make sure your IP is whitelisted in MongoDB Atlas.',
+				);
+			}
+		}
 	}
 };
 module.exports = connectDB;

@@ -206,74 +206,88 @@ export function Home() {
 							'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
 						}
 					>
-						{trending.map((repo) => (
-							<Link
-								key={repo.id}
-								to={`/repos/${repo.owner?.login}/${repo.name}`}
-								className={
-									'group bg-gray-800/40 border border-gray-700/50 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 hover:-translate-y-0.5'
-								}
-							>
-								<div className={'flex items-center gap-3 mb-3'}>
-									<img
-										src={repo.owner?.avatar_url}
-										alt={repo.owner?.login}
-										className={'w-8 h-8 rounded-full'}
-									/>
-									<span
+						{trending
+							.filter((repo) => repo.owner)
+							.map((repo) => (
+								<Link
+									key={repo.id}
+									to={`/repos/${repo.owner.login}/${repo.name}`}
+									className={
+										'group bg-gray-800/40 border border-gray-700/50 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 hover:-translate-y-0.5'
+									}
+								>
+									<div
 										className={
-											'text-sm text-gray-400 truncate'
+											'flex items-center gap-3 mb-3'
 										}
 									>
-										{repo.owner?.login}
-									</span>
-								</div>
-								<h3
-									className={
-										'font-semibold text-white group-hover:text-blue-400 transition-colors mb-2 truncate'
-									}
-								>
-									{repo.name}
-								</h3>
-								<p
-									className={
-										'text-sm text-gray-500 line-clamp-2 mb-4'
-									}
-								>
-									{repo.description}
-								</p>
-								<div
-									className={
-										'flex items-center gap-4 text-xs text-gray-500'
-									}
-								>
-									<span className={'flex items-center gap-1'}>
-										<Star
-											size={14}
-											className={'text-yellow-500'}
+										<img
+											src={repo.owner.avatar_url}
+											alt={repo.owner.login}
+											className={'w-8 h-8 rounded-full'}
 										/>
-										{(
-											repo.stargazers_count || 0
-										).toLocaleString()}
-									</span>
-									<span className={'flex items-center gap-1'}>
-										<GitFork size={14} />
-										{(
-											repo.forks_count || 0
-										).toLocaleString()}
-									</span>
-									{repo.language && (
 										<span
 											className={
-												'bg-gray-700/50 px-2 py-0.5 rounded-full'
+												'text-sm text-gray-400 truncate'
 											}
 										>
-											{repo.language}
+											{repo.owner?.login}
 										</span>
-									)}
-								</div>
-							</Link>
-						))}
+									</div>
+									<h3
+										className={
+											'font-semibold text-white group-hover:text-blue-400 transition-colors mb-2 truncate'
+										}
+									>
+										{repo.name}
+									</h3>
+									<p
+										className={
+											'text-sm text-gray-500 line-clamp-2 mb-4'
+										}
+									>
+										{repo.description}
+									</p>
+									<div
+										className={
+											'flex items-center gap-4 text-xs text-gray-500'
+										}
+									>
+										<span
+											className={
+												'flex items-center gap-1'
+											}
+										>
+											<Star
+												size={14}
+												className={'text-yellow-500'}
+											/>
+											{(
+												repo.stargazers_count || 0
+											).toLocaleString()}
+										</span>
+										<span
+											className={
+												'flex items-center gap-1'
+											}
+										>
+											<GitFork size={14} />
+											{(
+												repo.forks_count || 0
+											).toLocaleString()}
+										</span>
+										{repo.language && (
+											<span
+												className={
+													'bg-gray-700/50 px-2 py-0.5 rounded-full'
+												}
+											>
+												{repo.language}
+											</span>
+										)}
+									</div>
+								</Link>
+							))}
 					</div>
 				</div>
 			)}

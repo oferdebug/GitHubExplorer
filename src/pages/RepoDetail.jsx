@@ -28,8 +28,15 @@ export default function RepoDetail() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
+		let cancelled = false;
 		setLoading(true);
 		setError(null);
+		setRepo(null);
+		setLanguages({});
+		setContributors([]);
+		setCommits([]);
+		setBranches([]);
+		setIssues([]);
 		Promise.allSettled([
 			getRepo(owner, name),
 			getRepoLanguage(owner, name),
@@ -39,6 +46,7 @@ export default function RepoDetail() {
 			getRepoIssues(owner, name),
 		])
 			.then((results) => {
+				if (cancelled) return;
 				const [
 					repoRes,
 					langRes,
@@ -60,7 +68,12 @@ export default function RepoDetail() {
 				if (issuesRes.status === 'fulfilled')
 					setIssues(issuesRes.value.data);
 			})
-			.finally(() => setLoading(false));
+			.finally(() => {
+				if (!cancelled) setLoading(false);
+			});
+		return () => {
+			cancelled = true;
+		};
 	}, [owner, name]);
 
 	if (loading) {

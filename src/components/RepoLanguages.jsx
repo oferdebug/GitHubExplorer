@@ -25,6 +25,7 @@ export function RepoLanguages({ languages }) {
 	if (!languages || Object.keys(languages).length === 0) return null;
 
 	const total = Object.values(languages).reduce((sum, v) => sum + v, 0);
+	if (total === 0) return null;
 	const entries = Object.entries(languages).sort((a, b) => b[1] - a[1]);
 
 	return (

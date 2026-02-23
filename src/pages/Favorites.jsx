@@ -1,6 +1,7 @@
 import { Heart, Star, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 import { useAuth } from '../context/AuthContext';
 import { getFavorites, removeFavorite } from '../services/api';
 
@@ -17,7 +18,10 @@ export function Favorites() {
 		}
 		getFavorites()
 			.then((res) => setFavorites(res.data))
-			.catch((err) => console.error(err))
+			.catch((err) => {
+				console.error(err);
+				toast.error('Failed to load favorites');
+			})
 			.finally(() => setLoading(false));
 	}, [user]);
 
@@ -25,8 +29,10 @@ export function Favorites() {
 		try {
 			await removeFavorite(id);
 			setFavorites((prev) => prev.filter((f) => f._id !== id));
+			toast.success('Removed from favorites');
 		} catch (err) {
 			console.error('Failed to remove favorite:', err);
+			toast.error('Failed to remove favorite');
 		}
 	};
 
@@ -184,7 +190,7 @@ export function Favorites() {
 								type='button'
 								onClick={() => handleRemove(fav._id)}
 								className={
-									'p-2 text-gray-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100'
+									'p-2 text-gray-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200 opacity-40 group-hover:opacity-100'
 								}
 								title='Remove from favorites'
 							>

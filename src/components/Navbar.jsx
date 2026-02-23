@@ -7,8 +7,13 @@ export function Navbar() {
 	const { user, loading, logout } = useAuth();
 
 	const handleLogout = async () => {
-		await logout();
-		toast.success('Logged out successfully');
+		try {
+			await logout();
+			toast.success('Logged out successfully');
+		} catch (err) {
+			console.error('Logout failed:', err);
+			toast.error(`Logout failed: ${err.message}`);
+		}
 	};
 
 	return (

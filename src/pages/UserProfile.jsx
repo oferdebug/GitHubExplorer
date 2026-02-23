@@ -134,7 +134,7 @@ export function UserProfile() {
 								}
 							>
 								<p className={'text-xl font-bold text-white'}>
-									{user.public_repos}
+									{(user.public_repos ?? 0).toLocaleString()}
 								</p>
 								<p
 									className={

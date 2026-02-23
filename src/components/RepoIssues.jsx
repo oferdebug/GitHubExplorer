@@ -43,21 +43,24 @@ export function RepoIssues({ issues }) {
 								<span className={'text-xs text-gray-500'}>
 									#{issue.number}
 								</span>
-								{issue.labels?.slice(0, 3).map((label) => (
-									<span
-										key={label.id}
-										className={
-											'text-xs px-1.5 py-0.5 rounded-full'
-										}
-										style={{
-											backgroundColor: `#${label.color}20`,
-											color: `#${label.color}`,
-											border: `1px solid #${label.color}40`,
-										}}
-									>
-										{label.name}
-									</span>
-								))}
+								{issue.labels?.slice(0, 3).map((label) => {
+									const hex = label.color || 'cccccc';
+									return (
+										<span
+											key={label.id}
+											className={
+												'text-xs px-1.5 py-0.5 rounded-full'
+											}
+											style={{
+												backgroundColor: `#${hex}20`,
+												color: `#${hex}`,
+												border: `1px solid #${hex}40`,
+											}}
+										>
+											{label.name}
+										</span>
+									);
+								})}
 							</div>
 						</div>
 					</a>
