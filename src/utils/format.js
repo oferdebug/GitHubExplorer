@@ -8,8 +8,11 @@ export const formatDate = (date, options = {}) => {
 };
 
 export const formatNumber = (num) => {
-	if (num >= 1000) {
-		return `${(num / 1000).toFixed(1)}k`;
+	if (num == null) return '';
+	const n = Number(num);
+	if (Number.isNaN(n)) return '';
+	if (n >= 1000) {
+		return `${(n / 1000).toFixed(1)}k`;
 	}
-	return num.toString();
+	return n.toString();
 };

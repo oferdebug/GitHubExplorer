@@ -1,5 +1,3 @@
-import { fetchUserProfile, fetchUserRepos } from '../services/api';
-
 const ProfileViewer = () => {
 	return (
 		<div>

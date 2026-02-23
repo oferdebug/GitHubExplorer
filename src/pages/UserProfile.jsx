@@ -4,7 +4,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import { Repocard } from '../components/RepoCard';
 import { getUser, getUserRepos } from '../services/api';
 
-export function Userprofile() {
+export function UserProfile() {
 	const { username } = useParams();
 	const [user, setUser] = useState(null);
 	const [repos, setRepos] = useState([]);

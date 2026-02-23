@@ -15,7 +15,7 @@ export function UserCard({ user }) {
 			/>
 			<div>
 				<h3 className={'font-semibold'}>{user.login}</h3>
-				<p className={'text-sm text-gray-500'}>view Profile</p>
+				<p className={'text-sm text-gray-500'}>View Profile</p>
 				{user.public_repos !== undefined && (
 					<span className={'text-xs text-gray-400'}>
 						{user.public_repos} repositories

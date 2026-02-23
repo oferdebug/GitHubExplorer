@@ -7,7 +7,7 @@ import { UserCard } from '../components/UserCard';
 import { useSearchParams } from 'react-router-dom';
 import { Repocard } from '../components/RepoCard';
 
-export const Searchresults = () => {
+export const SearchResults = () => {
 	const [searchParams] = useSearchParams();
 	const q = searchParams.get('q');
 	const [results, setResults] = useState([]);

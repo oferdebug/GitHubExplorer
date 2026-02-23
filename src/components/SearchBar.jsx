@@ -18,6 +18,8 @@ export function SearchBar() {
 				type='text'
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
+				aria-label='Search'
+				placeholder='Search repositories or users...'
 			/>
 			<button type='submit'>Search</button>
 		</form>

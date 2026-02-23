@@ -15,7 +15,7 @@ import {
 	getRepoLanguage,
 } from '../services/api';
 
-export default function Repodetail() {
+export default function RepoDetail() {
 	const { owner, name } = useParams();
 	const [repo, setRepo] = useState(null);
 	const [languages, setLanguages] = useState({});

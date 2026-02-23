@@ -2,9 +2,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import './App.css';
-import { Searchresults } from './pages/SearchResults';
-import { Userprofile } from './pages/UserProfile';
+import { SearchResults } from './pages/SearchResults';
+import { UserProfile } from './pages/UserProfile';
 import RepoDetail from './pages/RepoDetail';
+import { Favorites } from './pages/Favorites';
+import { Login } from './pages/Login';
 function App() {
 	return (
 		<BrowserRouter>
@@ -12,12 +14,14 @@ function App() {
 			<main className={'max-w-7xl mx-auto px-4 py-6'}>
 				<Routes>
 					<Route path='/' element={<Home />} />
-					<Route path='/search' element={<Searchresults />} />
-					<Route path='/users/:username' element={<Userprofile />} />
+					<Route path='/search' element={<SearchResults />} />
+					<Route path='/users/:username' element={<UserProfile />} />
 					<Route
 						path='/repos/:owner/:name'
 						element={<RepoDetail />}
 					/>
+					<Route path='/favorites' element={<Favorites />} />
+					<Route path='/login' element={<Login />} />
 				</Routes>
 			</main>
 		</BrowserRouter>

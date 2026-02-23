@@ -9,7 +9,7 @@ export function Repocard({ repo }) {
 			}
 		>
 			<Link
-				to={`/repo/${repo.owner.login}/${repo.name}`}
+				to={`/repos/${repo.owner?.login || 'unknown'}/${repo.name}`}
 				className={
 					'text-xl font-semibold text-blue-500 hover:underline'
 				}
