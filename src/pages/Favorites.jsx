@@ -54,7 +54,7 @@ export function Favorites() {
 				<Link
 					to='/login'
 					className={
-						'px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:to-blue-600 transition-all duration-200'
+						'px-6 py-3 bg-linear-to-r from-purple-500 to-blue-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:to-blue-600 transition-all duration-200'
 					}
 				>
 					Sign in

@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 import AuthProvider from './context/AuthContext';
 import { Favorites } from './pages/Favorites';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
+import { NotFound } from './pages/NotFound';
 import RepoDetail from './pages/RepoDetail';
 import { SearchResults } from './pages/SearchResults';
 import { UserProfile } from './pages/UserProfile';
-import { NotFound } from './pages/NotFound';
-import { Footer } from './components/Footer';
 import './App.css';
 function App() {
 	return (

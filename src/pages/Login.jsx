@@ -15,7 +15,7 @@ export function Login() {
 			<div className={'relative max-w-md w-full'}>
 				<div
 					className={
-						'absolute -inset-1 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 rounded-3xl blur-xl opacity-20'
+						'absolute -inset-1 bg-linear-to-r from-purple-500 via-blue-500 to-cyan-500 rounded-3xl blur-xl opacity-20'
 					}
 				/>
 				<div
@@ -27,12 +27,12 @@ export function Login() {
 						<div className={'relative'}>
 							<div
 								className={
-									'absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl blur-lg opacity-50'
+									'absolute inset-0 bg-linear-to-r from-purple-500 to-blue-500 rounded-2xl blur-lg opacity-50'
 								}
 							/>
 							<div
 								className={
-									'relative bg-gradient-to-br from-gray-700 to-gray-800 p-5 rounded-2xl border border-gray-600/50'
+									'relative bg-linear-to-br from-gray-700 to-gray-800 p-5 rounded-2xl border border-gray-600/50'
 								}
 							>
 								<Github size={40} className={'text-white'} />
@@ -49,7 +49,7 @@ export function Login() {
 						type='button'
 						onClick={handleGitHubLogin}
 						className={
-							'w-full flex items-center justify-center gap-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3.5 rounded-xl font-semibold hover:from-purple-600 hover:to-blue-600 transition-all duration-200 mb-8'
+							'w-full flex items-center justify-center gap-3 bg-linear-to-r from-purple-500 to-blue-500 text-white px-6 py-3.5 rounded-xl font-semibold hover:from-purple-600 hover:to-blue-600 transition-all duration-200 mb-8'
 						}
 					>
 						<Github size={20} />

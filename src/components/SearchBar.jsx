@@ -18,7 +18,7 @@ export function SearchBar() {
 			<div className={'relative group'}>
 				<div
 					className={
-						'absolute -inset-0.5 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 rounded-2xl opacity-20 group-hover:opacity-40 blur transition-opacity duration-300'
+						'absolute -inset-0.5 bg-linear-to-r from-purple-500 via-blue-500 to-cyan-500 rounded-2xl opacity-20 group-hover:opacity-40 blur transition-opacity duration-300'
 					}
 				/>
 				<div
@@ -40,7 +40,7 @@ export function SearchBar() {
 					<button
 						type='submit'
 						className={
-							'mr-2 px-6 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-200'
+							'mr-2 px-6 py-2.5 bg-linear-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-200'
 						}
 					>
 						Search

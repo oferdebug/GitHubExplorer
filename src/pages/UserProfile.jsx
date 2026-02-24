@@ -76,7 +76,7 @@ export function UserProfile() {
 					<div className={'relative'}>
 						<div
 							className={
-								'absolute -inset-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur opacity-30'
+								'absolute -inset-1 bg-linear-to-r from-purple-500 to-blue-500 rounded-full blur opacity-30'
 							}
 						/>
 						<img

@@ -52,12 +52,12 @@ export function Home() {
 						<div className={'relative'}>
 							<div
 								className={
-									'absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-3xl blur-xl opacity-50'
+									'absolute inset-0 bg-linear-to-r from-purple-500 to-blue-500 rounded-3xl blur-xl opacity-50'
 								}
 							/>
 							<div
 								className={
-									'relative bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-3xl border border-gray-700/50'
+									'relative bg-linear-to-br from-gray-800 to-gray-900 p-6 rounded-3xl border border-gray-700/50'
 								}
 							>
 								<Github size={64} className={'text-white'} />
@@ -72,7 +72,7 @@ export function Home() {
 					>
 						<span
 							className={
-								'bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent'
+								'bg-linear-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent'
 							}
 						>
 							GitHub Explorer
@@ -225,6 +225,10 @@ export function Home() {
 											src={repo.owner.avatar_url}
 											alt={repo.owner.login}
 											className={'w-8 h-8 rounded-full'}
+											onError={(e) => {
+												e.currentTarget.onerror = null;
+												e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(repo.owner.login)}&background=6b7280&color=fff&size=32`;
+											}}
 										/>
 										<span
 											className={

@@ -11,8 +11,9 @@ export function Navbar() {
 			await logout();
 			toast.success('Logged out successfully');
 		} catch (err) {
-			console.error('Logout failed:', err);
-			toast.error(`Logout failed: ${err.message}`);
+			const msg = err?.message ?? String(err);
+			console.error('Logout failed:', msg);
+			toast.error(`Logout failed: ${msg}`);
 		}
 	};
 
@@ -35,7 +36,7 @@ export function Navbar() {
 				>
 					<div
 						className={
-							'bg-gradient-to-br from-purple-500 to-blue-500 p-1.5 rounded-lg'
+							'bg-linear-to-br from-purple-500 to-blue-500 p-1.5 rounded-lg'
 						}
 					>
 						<Github size={22} className={'text-white'} />
@@ -98,7 +99,7 @@ export function Navbar() {
 						<Link
 							to='/login'
 							className={
-								'ml-2 px-5 py-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-semibold rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all duration-200'
+								'ml-2 px-5 py-2 bg-linear-to-r from-purple-500 to-blue-500 text-white text-sm font-semibold rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all duration-200'
 							}
 						>
 							Sign in
