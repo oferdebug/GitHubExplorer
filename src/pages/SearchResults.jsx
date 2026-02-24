@@ -1,5 +1,5 @@
 import { Filter, Search } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Repocard } from '../components/RepoCard';
 import { UserCard } from '../components/UserCard';
@@ -20,11 +20,8 @@ export const SearchResults = () => {
 	const perPage = 20;
 	const prevQuery = useRef('');
 
-	useEffect(() => {
-		if (!q) return;
-		setPage(1);
-		prevQuery.current = q;
-		const fetchResults = (pageNum, append = false) => {
+	const fetchResults = useCallback(
+		(pageNum, { append = false } = {}) => {
 			if (!q) return;
 			if (append) {
 				setLoadingMore(true);
@@ -56,30 +53,21 @@ export const SearchResults = () => {
 					setLoading(false);
 					setLoadingMore(false);
 				});
-		};
-		fetchResults(1, false);
-	}, [q, type, sort]);
+		},
+		[q, type, sort],
+	);
+
+	useEffect(() => {
+		if (!q) return;
+		setPage(1);
+		prevQuery.current = q;
+		fetchResults(1);
+	}, [fetchResults, q]);
 
 	const handleLoadMore = () => {
-		if (!q) return;
 		const nextPage = page + 1;
 		setPage(nextPage);
-		setLoadingMore(true);
-		searchGithub(
-			q,
-			type,
-			sort || undefined,
-			sort ? 'desc' : undefined,
-			perPage,
-			nextPage,
-		)
-			.then((res) => {
-				const items = res.data.items || [];
-				setTotalCount(res.data.total_count || 0);
-				setResults((prev) => [...prev, ...items]);
-			})
-			.catch((err) => setError(err.message))
-			.finally(() => setLoadingMore(false));
+		fetchResults(nextPage, { append: true });
 	};
 
 	const hasMore = results.length < totalCount;

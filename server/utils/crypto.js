@@ -3,10 +3,22 @@ const crypto = require('node:crypto');
 const ALGORITHM = 'aes-256-gcm';
 const IV_LENGTH = 12;
 
+if (!process.env.ENCRYPTION_KEY) {
+	if (process.env.NODE_ENV === 'production') {
+		console.error(
+			'FATAL: ENCRYPTION_KEY environment variable is not defined.',
+		);
+		process.exit(1);
+	}
+	console.warn(
+		'WARNING: ENCRYPTION_KEY environment variable is not defined — encryption will fail at runtime.',
+	);
+}
+
 function getKey() {
 	const key = process.env.ENCRYPTION_KEY;
 	if (!key) {
-		throw new Error('ENCRYPTION_KEY is not set in .env');
+		throw new Error('ENCRYPTION_KEY is not set');
 	}
 	return Buffer.from(key, 'hex');
 }

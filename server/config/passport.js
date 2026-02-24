@@ -15,14 +15,23 @@ passport.deserializeUser(async (id, done) => {
 	}
 });
 
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL } =
+	process.env;
+
+if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET || !GITHUB_CALLBACK_URL) {
+	throw new Error(
+		'Missing GitHub OAuth configuration: GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, and GITHUB_CALLBACK_URL must all be set.',
+	);
+}
+
 passport.use(
 	new GitHubStrategy(
 		{
-			clientID: process.env.GITHUB_CLIENT_ID,
-			clientSecret: process.env.GITHUB_CLIENT_SECRET,
-			callbackURL: process.env.GITHUB_CALLBACK_URL,
+			clientID: GITHUB_CLIENT_ID,
+			clientSecret: GITHUB_CLIENT_SECRET,
+			callbackURL: GITHUB_CALLBACK_URL,
 		},
-		async (accessToken, refreshToken, profile, done) => {
+		async (accessToken, _refreshToken, profile, done) => {
 			try {
 				let user = await User.findOne({ githubId: profile.id });
 				if (!user) {
